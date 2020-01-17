@@ -158,6 +158,8 @@ class AudioRecorderController: UIViewController {
         
         let recordButtonTitle = isRecording ? "Stop" : "Record"
         recordButton.setTitle(recordButtonTitle, for: .normal)
+        
+        timeRemainingLabel.text = timeIntervalFormatter.string(from: (audioPlayer?.duration ?? 0) - elapsedTime)
     }
 }
 
@@ -187,6 +189,7 @@ extension AudioRecorderController: AVAudioRecorderDelegate {
         print("Finished recording")
         if let recordURL = recordURL {
             audioPlayer = try! AVAudioPlayer(contentsOf: recordURL)
+            updateViews()
         }
     }
     
